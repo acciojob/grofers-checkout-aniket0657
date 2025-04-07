@@ -1,27 +1,36 @@
-function calculateTotal() {
-            let prices = document.querySelectorAll(".prices");
-            let total = 0;
+const getSumBtn = document.createElement("button");
+getSumBtn.append("Get Total Price");
+document.body.appendChild(getSumBtn);
 
-            prices.forEach(price => {
-                total += parseFloat(price.textContent);
-            });
+const getSum = () => {
+  let prices = document.querySelectorAll(".price");
+  let sum = 0;
 
-            let table = document.getElementById("groceryTable");
+  prices.forEach(priceElement => {
+    sum += parseFloat(priceElement.innerText) || 0;
+  });
 
-            // Remove existing total row if present
-            let existingTotalRow = document.getElementById("totalRow");
-            if (existingTotalRow) {
-                existingTotalRow.remove();
-            }
+  let table = document.querySelector("table");
+  let totalRow = document.getElementById("total-row");
 
-            let totalRow = document.createElement("tr");
-            totalRow.id = "totalRow";
+  if (totalRow) {
+    totalRow.remove();
+  }
 
-            let totalCell = document.createElement("td");
-            totalCell.colSpan = 2;
-            totalCell.style.fontWeight = "bold";
-            totalCell.textContent = "Total Price: " + total;
+  totalRow = document.createElement("tr");
+  totalRow.id = "total-row";
 
-            totalRow.appendChild(totalCell);
-            table.appendChild(totalRow);
-        }
+  let totalCell = document.createElement("td");
+  totalCell.colSpan = 3;
+  totalCell.innerText = "Total Price: ";
+
+  let totalValue = document.createElement("span");
+  totalValue.id = "ans";
+  totalValue.innerText = sum.toFixed(2);
+
+  totalCell.appendChild(totalValue);
+  totalRow.appendChild(totalCell);
+  table.appendChild(totalRow);
+};
+
+getSumBtn.addEventListener("click", getSum);
